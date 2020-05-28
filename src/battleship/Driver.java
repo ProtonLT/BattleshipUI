@@ -1,8 +1,13 @@
 package battleship;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
-import javax.swing.JFrame;
+import javax.swing.*;
 
-public class Driver extends JFrame{
+public class Driver{
 
 	Space[][] attack1 = new Space[10][10];
 	Space[][] defend1 = new Space[10][10];
@@ -11,9 +16,30 @@ public class Driver extends JFrame{
 	Ship[] ships1 = new Ship[5];
 	Ship[] ships2 = new Ship[5];
 
+	public Driver()
+	{
+		JFrame frame = new BattleshipFrame("Battleship");
+		//create swing components
+		//JPanel panel = new JPanel();
+		//JButton start = new JButton("Start");
+		//start.addActionListener(this);
+		//JLabel startLabel = new JLabel("Start");
+		//panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+		//panel.setLayout(new GridLayout(0, 1));
+		//panel.add(start);
+		//panel.add(startLabel);
+		//add swing components
+		//frame.add(panel, BorderLayout.CENTER);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setTitle("Battleship");
+		frame.setPreferredSize(new Dimension(500, 400));
+		frame.pack();
+		frame.setVisible(true);
+	}
+	
 	public static void main(String[] args)
 	{
-		System.out.println("BATTLESHIP");
+		
 		Scanner input = new Scanner(System.in);
 		Driver a = new Driver();
 		a.initBoards();
@@ -23,6 +49,7 @@ public class Driver extends JFrame{
 		//a.printBoard(a.attack1);
 		//a.printBoard(a.attack2);
 		input.close();
+		
 	}
 	
 	public void test()
@@ -152,6 +179,9 @@ public class Driver extends JFrame{
 						if(isViable)
 						{
 							check1 = false;
+							int[] location = {xcoord, ycoord};
+							ships1[i].setLocation(location);
+							ships1[i].setOrientation("H");
 							for(int j = 0; j < ship.getSize().length; j++)
 							{
 								defend1[xcoord][ycoord + j] = ship.getSize()[j];
@@ -182,6 +212,9 @@ public class Driver extends JFrame{
 						if(isViable)
 						{
 							check1 = false;
+							int[] location = {xcoord, ycoord};
+							ships1[i].setLocation(location);
+							ships1[i].setOrientation("V");
 							for(int j = 0; j < ship.getSize().length; j++)
 							{
 								defend1[xcoord + j][ycoord] = ship.getSize()[j];
@@ -268,6 +301,10 @@ public class Driver extends JFrame{
 						if(isViable)
 						{
 							check1 = false;
+							//put location and orientation data into ship pbject
+							int[] location = {xcoord, ycoord};
+							ships2[i].setLocation(location);
+							ships2[i].setOrientation("H");
 							for(int j = 0; j < ship.getSize().length; j++)
 							{
 								defend2[xcoord][ycoord + j] = ship.getSize()[j];
@@ -298,6 +335,9 @@ public class Driver extends JFrame{
 						if(isViable)
 						{
 							check1 = false;
+							int[] location = {xcoord, ycoord};
+							ships2[i].setLocation(location);
+							ships2[i].setOrientation("V");
 							for(int j = 0; j < ship.getSize().length; j++)
 							{
 								defend2[xcoord + j][ycoord] = ship.getSize()[j];
@@ -308,6 +348,11 @@ public class Driver extends JFrame{
 				}
 				printBoard(defend2);
 			}
+		}
+		for(int i = 0; i < 5; i++)
+		{
+			System.out.println("Name: " + ships1[i].getName() + " Location: " + ships1[i].getLocation()[0] + " " + ships2[i].getLocation()[1] + " Orientation: " + ships1[i].getOrientation());
+			System.out.println("Name: " + ships2[i].getName() + " Location: " + ships2[i].getLocation()[0] + " " + ships2[i].getLocation()[1] + " Orientation: " + ships2[i].getOrientation());
 		}
 		
 	}

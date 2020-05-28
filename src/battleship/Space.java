@@ -1,8 +1,8 @@
 package battleship;
 public class Space {
 	
-	public boolean isHit;
-	public boolean isShip;
+	private boolean isHit;
+	private boolean isShip;
 	private Ship parent;
 	
 	public Space(boolean isShip, Ship parent)

@@ -2,9 +2,11 @@ package battleship;
 
 public class Ship{
 
-	public String name;
-	public int health;
-	Space[] size;
+	private String name;
+	private int health;
+	private Space[] size;
+	private int[] location = new int[2];
+	private String orientation = "";
 	
 	public static void main(String[] args)
 	{
@@ -42,6 +44,26 @@ public class Ship{
 	public void setHealth(int health)
 	{
 		this.health = health;
+	}
+	
+	public void setLocation(int[] location)
+	{
+		this.location = location;
+	}
+	
+	public int[] getLocation()
+	{
+		return location;
+	}
+	
+	public String getOrientation()
+	{
+		return orientation;
+	}
+	
+	public void setOrientation(String orientation)
+	{
+		this.orientation = orientation;
 	}
 	
 	public Space[] getSize()
