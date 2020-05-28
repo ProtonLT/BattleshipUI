@@ -18,7 +18,8 @@ public class Driver{
 
 	public Driver()
 	{
-		JFrame frame = new BattleshipFrame("Battleship");
+		//JFrame frame = new TestFrame("Battleship", this);
+		JFrame frame = new BattleshipFrame("Battleship", this);
 		//create swing components
 		//JPanel panel = new JPanel();
 		//JButton start = new JButton("Start");
@@ -178,6 +179,7 @@ public class Driver{
 						}
 						if(isViable)
 						{
+							//System.out.println("y: " + xcoord + " x: " + ycoord);
 							check1 = false;
 							int[] location = {xcoord, ycoord};
 							ships1[i].setLocation(location);
@@ -349,11 +351,11 @@ public class Driver{
 				printBoard(defend2);
 			}
 		}
-		for(int i = 0; i < 5; i++)
+		/**for(int i = 0; i < 5; i++)
 		{
-			System.out.println("Name: " + ships1[i].getName() + " Location: " + ships1[i].getLocation()[0] + " " + ships2[i].getLocation()[1] + " Orientation: " + ships1[i].getOrientation());
+			System.out.println("Name: " + ships1[i].getName() + " Location: " + ships1[i].getLocation()[0] + " " + ships1[i].getLocation()[1] + " Orientation: " + ships1[i].getOrientation());
 			System.out.println("Name: " + ships2[i].getName() + " Location: " + ships2[i].getLocation()[0] + " " + ships2[i].getLocation()[1] + " Orientation: " + ships2[i].getOrientation());
-		}
+		} */
 		
 	}
 

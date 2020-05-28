@@ -2,65 +2,63 @@ package battleship;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
 import javax.swing.*;
-
 public class BattleshipFrame extends JFrame{
 	
-	public BattleshipFrame(String title)
+	private Driver driver;
+	public BattleshipFrame(String title, Driver driver)
 	{
 		super(title);
-		
-		//set layout manager
-		setLayout(new BorderLayout());
-		
-		//create swing component
-		final JTextArea textArea = new JTextArea();
-		JButton button = new JButton("Start");
-		
-		DetailPanel detailPanel = new DetailPanel();
-		
-		//add swing components to content panel
-		Container c = getContentPane();
-
-		c.add(textArea, BorderLayout.CENTER);
-		c.add(button, BorderLayout.SOUTH);
-		c.add(detailPanel, BorderLayout.EAST);
-
-		//add behavior
-		button.addActionListener(new ActionListener() {
-			@Override
+		JPanel panel = new JPanel();
+		JButton testButton = new JButton("Print");
+		JTextArea textArea = new JTextArea();
+				
+		testButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				textArea.append("Hello\n");
+				String[] letters = {"     ", "A  ", "B  ", "C  ", "D  ", "E  ", "F  ", "G  ", "H  ", "I  ", "J"};
+				//textArea.append("UMMM IS IT WORKING UMMM?");
+				for(int i = 0; i < driver.defend1.length + 1; i++)
+				{
+					textArea.append(letters[i]); //print
+				}
+				textArea.append("\n");
+				//System.out.println();
+				for(int i = 0; i < driver.defend1.length; i++)
+				{
+					textArea.append(" " + i + "  "); //print
+					for(int j = 0; j < driver.defend1[i].length; j++)
+					{
+						if(driver.defend1[i][j].getIsShip())
+						{
+							if(driver.defend1[i][j].getIsHit())
+								textArea.append("0  "); //print
+							else
+								textArea.append("O  "); //print
+						}
+						else
+						{
+							if(driver.defend1[i][j].getIsHit()) //print
+								textArea.append("/  ");
+							else
+								textArea.append("~  "); //print
+						}
+					}
+					textArea.append("\n"); //println
+				}
 			}
 		});
-	}
-}
-
-class DetailPanel extends JPanel{
-	public DetailPanel()
-	{
-		Dimension size = getPreferredSize();
+		Dimension size = panel.getPreferredSize();
 		size.width = 250;
-		setPreferredSize(size);
+		panel.setPreferredSize(size);
+		panel.setBorder(BorderFactory.createTitledBorder("Boards"));
+		panel.add(testButton);
 		
-		setBorder(BorderFactory.createTitledBorder("Grid"));
-		
-		JLabel attackLabel = new JLabel("Attack:");
-		JLabel defendLabel = new JLabel("Defend:");
-		
-		JTextField nameField = new JTextField(10);
-		JTextField otherField = new JTextField(10);
-		
-		JButton addBtn = new JButton("Add");
-		
-		setLayout(new GridBagLayout());
-		
-		GridBagConstraints gc = new GridBagConstraints();
+		Container c = getContentPane();
+
+		c.add(panel, BorderLayout.EAST);
+		c.add(textArea, BorderLayout.WEST);
 	}
+
 }
