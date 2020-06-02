@@ -15,11 +15,12 @@ public class Driver{
 	Space[][] defend2 = new Space[10][10];
 	Ship[] ships1 = new Ship[5];
 	Ship[] ships2 = new Ship[5];
+	private BattleshipFrame frame = new BattleshipFrame("Battleship", this);
 
 	public Driver()
 	{
 		//JFrame frame = new TestFrame("Battleship", this);
-		JFrame frame = new BattleshipFrame("Battleship", this);
+		frame = new BattleshipFrame("Battleship", this);
 		//create swing components
 		//JPanel panel = new JPanel();
 		//JButton start = new JButton("Start");
@@ -104,10 +105,70 @@ public class Driver{
 		}
 	}
 
+	public void placeShip(int ycoord, int xcoord, int counter, int player, String orientation)
+	{
+		//System.out.println("cheers luv: " + player);
+		if(orientation.toUpperCase().equals("H"))
+		{
+			if(player == 1)
+			{
+				//System.out.println("another testing");
+				int[] location = {ycoord, xcoord};
+				ships1[counter].setLocation(location);
+				ships1[counter].setOrientation("H");
+				for(int j = 0; j < ships1[counter].getSize().length; j++)
+				{
+
+					defend1[ycoord][xcoord + j] = ships1[counter].getSize()[j];
+				}
+				printBoard(defend1);
+			}
+			if(player == 2)
+			{
+				//System.out.println("umm testing");
+				int[] location = {ycoord, xcoord};
+				ships2[counter].setLocation(location);
+				ships2[counter].setOrientation("H");
+				for(int j = 0; j < ships2[counter].getSize().length; j++)
+				{
+					defend2[ycoord][xcoord + j] = ships2[counter].getSize()[j];
+				}
+				printBoard(defend2);
+			}
+		}
+		else if(orientation.toUpperCase().equals("V"))
+		{
+			if(player == 1)
+			{
+				int[] location = {xcoord, ycoord};
+				ships1[counter].setLocation(location);
+				ships1[counter].setOrientation("V");
+				for(int j = 0; j < ships1[counter].getSize().length; j++)
+				{
+					defend1[xcoord + j][ycoord] = ships1[counter].getSize()[j];
+				}
+				printBoard(defend1);
+			}
+			else if(player == 2)
+			{
+				int[] location = {xcoord, ycoord};
+				ships2[counter].setLocation(location);
+				ships2[counter].setOrientation("V");
+				for(int j = 0; j < ships2[counter].getSize().length; j++)
+				{
+					defend2[xcoord + j][ycoord] = ships2[counter].getSize()[j];
+				}
+				printBoard(defend2);
+			}
+		}
+		
+	}
+	
 	public void initGame(Scanner input)
 	{
 		//PLAYER 1 SETUP
 		printBoard(defend1);
+		frame.printBoard(defend1);
 		for(int i = 0; i < 5; i++) // loops through each ship
 		{
 			boolean check1 = true;

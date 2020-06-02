@@ -13,7 +13,8 @@ import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
 public class TestFrame extends JFrame{
-	
+	private static final long serialVersionUID = 1L;
+
 	public TestFrame(String title, Driver driver)
 	{
 		super(title);
@@ -25,7 +26,7 @@ public class TestFrame extends JFrame{
 		final JTextArea textArea = new JTextArea();
 		JButton button = new JButton("Start");
 		
-		/**DetailPanel detailPanel = new DetailPanel();
+		DetailPanel detailPanel = new DetailPanel();
 		
 		detailPanel.addDetailListener(new DetailListener() {
 			public void detailEventOccurred(DetailEvent e)
@@ -34,8 +35,8 @@ public class TestFrame extends JFrame{
 				
 				textArea.append(text);
 			}
-		}); */
-		JPanel detailPanel = new JPanel();
+		});
+		//JPanel detailPanel = new JPanel();
 		Dimension size = detailPanel.getPreferredSize();
 		size.width = 250;
 		detailPanel.setPreferredSize(size);
@@ -60,6 +61,7 @@ public class TestFrame extends JFrame{
 }
 
 class DetailPanel extends JPanel{
+	private static final long serialVersionUID = 1L;
 	
 	private EventListenerList listenerList = new EventListenerList();
 	
@@ -154,6 +156,8 @@ class DetailPanel extends JPanel{
 
 class DetailEvent extends EventObject
 {
+	private static final long serialVersionUID = 1L;
+	
 	private String text;
 	public DetailEvent(Object source, String text)
 	{
