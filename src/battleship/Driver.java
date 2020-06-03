@@ -38,10 +38,10 @@ public class Driver{
 		frame.pack();
 		frame.setVisible(true);
 	}
-	
+
 	public static void main(String[] args)
 	{
-		
+
 		Scanner input = new Scanner(System.in);
 		Driver a = new Driver();
 		a.initBoards();
@@ -51,9 +51,9 @@ public class Driver{
 		//a.printBoard(a.attack1);
 		//a.printBoard(a.attack2);
 		input.close();
-		
+
 	}
-	
+
 	public void test()
 	{
 		for(int i = 0; i < 5; i++)
@@ -105,9 +105,15 @@ public class Driver{
 		}
 	}
 
-	public void placeShip(int ycoord, int xcoord, int counter, int player, String orientation)
+	public void placeShip(String ycoordStr, String xcoordStr, int counter, int player, String orientation)
 	{
-		//System.out.println("cheers luv: " + player);
+		if(!checkValidPlace(ycoordStr, xcoordStr, counter, player, orientation).equals("Ship placed."))
+		{
+			System.out.println("Here");
+			return;
+		}
+		int xcoord = letToNum(xcoordStr);
+		int ycoord = Integer.parseInt(ycoordStr);
 		if(orientation.toUpperCase().equals("H"))
 		{
 			if(player == 1)
@@ -140,30 +146,117 @@ public class Driver{
 		{
 			if(player == 1)
 			{
-				int[] location = {xcoord, ycoord};
+				int[] location = {ycoord, xcoord};
 				ships1[counter].setLocation(location);
 				ships1[counter].setOrientation("V");
 				for(int j = 0; j < ships1[counter].getSize().length; j++)
 				{
-					defend1[xcoord + j][ycoord] = ships1[counter].getSize()[j];
+					defend1[ycoord + j][xcoord] = ships1[counter].getSize()[j];
 				}
 				printBoard(defend1);
 			}
 			else if(player == 2)
 			{
-				int[] location = {xcoord, ycoord};
+				int[] location = {ycoord, xcoord};
 				ships2[counter].setLocation(location);
 				ships2[counter].setOrientation("V");
 				for(int j = 0; j < ships2[counter].getSize().length; j++)
 				{
-					defend2[xcoord + j][ycoord] = ships2[counter].getSize()[j];
+					defend2[ycoord + j][xcoord] = ships2[counter].getSize()[j];
 				}
 				printBoard(defend2);
 			}
 		}
-		
 	}
-	
+
+	public String checkValidPlace(String ycoordStr, String xcoordStr, int counter, int player, String orientation)
+	{
+		//check that x coord is A -J and y coord is 0 - 9
+		boolean isDigit = false;
+		if(ycoordStr.length() == 1)
+			if(Character.isDigit(ycoordStr.charAt(0)))
+				isDigit = true;
+		if(letToNum(xcoordStr) == -1 || !isDigit)
+		{
+			return ("X coordinate must be A - J, Y coordinate must be 0 - 9.");
+		}
+
+		//check that orientation is v or h
+		if(!orientation.toUpperCase().equals("H") && !orientation.toUpperCase().equals("V"))
+		{
+			return ("Must be 'V' or 'H'.");
+		}
+		int ycoord = Integer.parseInt(ycoordStr); 
+		int xcoord = letToNum(xcoordStr); 
+		//check that coordinates are within bounds
+		System.out.println("y: " + (ycoord + ships1[counter].getSize().length) + " x: " + (xcoord + ships1[counter].getSize().length));
+		if(orientation.toUpperCase().equals("H"))
+		{
+			if(ycoord > 9 || xcoord + ships1[counter].getSize().length - 1 > 9)// check if coordinates are out of bounds
+			{
+				return ("Coordinate out of bounds.");
+			}
+		}
+		else if(orientation.toUpperCase().equals("V"))
+		{
+			if(ycoord + ships1[counter].getSize().length - 1 > 9|| xcoord > 9)// check if coordinates are out of bounds
+			{
+				return ("Coordinate out of bounds.");
+			}
+		}
+
+		//check if space is already taken
+		if(orientation.toUpperCase().equals("H"))
+		{
+			System.out.println("H");
+			if(player == 1)
+			{
+				for(int j = 0; j < counter; j++)
+				{
+					if(defend1[ycoord][xcoord + j].getIsShip())		
+					{	
+						return ("Space is already taken.");
+					}
+				}
+			}
+			else if(player == 2)
+			{
+				for(int j = 0; j < counter; j++)
+				{
+					if(defend2[ycoord][xcoord + j].getIsShip())		
+					{	
+						return ("Space is already taken.");
+					}
+				}
+			}
+		}
+		if(orientation.toUpperCase().equals("V"))
+		{
+			System.out.println("V");
+			if(player == 1)
+			{
+				for(int j = 0; j < counter; j++)
+				{
+					if(defend1[ycoord + j][xcoord].getIsShip())		
+					{	
+						return ("Space is already taken.");
+					}
+				}
+			}
+			else if(player == 2)
+			{
+				for(int j = 0; j < counter; j++)
+				{
+					if(defend2[ycoord + j][xcoord].getIsShip())		
+					{	
+						return ("Space is already taken.");
+					}
+				}
+			}
+		}
+		return "Ship placed.";
+	}
+
 	public void initGame(Scanner input)
 	{
 		//PLAYER 1 SETUP
@@ -289,7 +382,7 @@ public class Driver{
 				printBoard(defend1);
 			}
 		}
-		
+
 		//PLAYER 2 SETUP
 		printBoard(defend2);
 		for(int i = 0; i < 5; i++) // loops through each ship
@@ -417,7 +510,7 @@ public class Driver{
 			System.out.println("Name: " + ships1[i].getName() + " Location: " + ships1[i].getLocation()[0] + " " + ships1[i].getLocation()[1] + " Orientation: " + ships1[i].getOrientation());
 			System.out.println("Name: " + ships2[i].getName() + " Location: " + ships2[i].getLocation()[0] + " " + ships2[i].getLocation()[1] + " Orientation: " + ships2[i].getOrientation());
 		} */
-		
+
 	}
 
 	public void run(Scanner input)
@@ -482,7 +575,7 @@ public class Driver{
 				System.out.println("Miss!");
 			}
 			//printBoard(defend2);
-			
+
 			//PLAYER 2 ATTACK
 			printBoard(attack2);
 			xcoord = 0;
