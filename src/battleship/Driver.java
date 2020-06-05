@@ -34,7 +34,7 @@ public class Driver{
 		//frame.add(panel, BorderLayout.CENTER);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setTitle("Battleship");
-		frame.setPreferredSize(new Dimension(500, 400));
+		frame.setPreferredSize(new Dimension(500, 530));
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -178,7 +178,7 @@ public class Driver{
 				isDigit = true;
 		if(letToNum(xcoordStr) == -1 || !isDigit)
 		{
-			return ("X coordinate must be A - J, Y coordinate must be 0 - 9.");
+			return ("X  must be A - J, Y must be 0 - 9.");
 		}
 
 		//check that orientation is v or h
@@ -189,7 +189,7 @@ public class Driver{
 		int ycoord = Integer.parseInt(ycoordStr); 
 		int xcoord = letToNum(xcoordStr); 
 		//check that coordinates are within bounds
-		System.out.println("y: " + (ycoord + ships1[counter].getSize().length) + " x: " + (xcoord + ships1[counter].getSize().length));
+		//System.out.println("y: " + (ycoord + ships1[counter].getSize().length) + " x: " + (xcoord + ships1[counter].getSize().length));
 		if(orientation.toUpperCase().equals("H"))
 		{
 			if(ycoord > 9 || xcoord + ships1[counter].getSize().length - 1 > 9)// check if coordinates are out of bounds
@@ -257,6 +257,110 @@ public class Driver{
 		return "Ship placed.";
 	}
 
+	public String checkValidTarget(String ycoordStr, String xcoordStr, int player)
+	{
+		int xcoord;
+		int ycoord;
+		//check that x is a - j, and y 0s 0 - 9
+		boolean isDigit = false;
+		if(ycoordStr.length() == 1)
+			if(Character.isDigit(ycoordStr.charAt(0)))
+				isDigit = true;
+		if(letToNum(xcoordStr) == -1 || !isDigit)
+		{
+			return ("X must be A - J, Y must be 0 - 9.");
+		}
+		else
+		{
+			ycoord = Integer.parseInt(ycoordStr); 
+			xcoord = letToNum(xcoordStr); 
+		}
+		//check to see if space has already been fired upon
+		if(player == 1)
+		{
+			if(attack1[ycoord][xcoord].getIsHit())
+			{
+				return ("Cannot fire on space already targeted.");
+			}
+		}
+		else
+		{
+			if(attack2[ycoord][xcoord].getIsHit())
+			{
+				return ("Cannot fire on space already targeted.");
+			}
+		}
+		String message = "";
+		if(player == 1)
+		{
+			defend2[ycoord][xcoord].setIsHit(true);
+			if(defend2[ycoord][xcoord].getIsShip())
+			{
+				attack1[ycoord][xcoord].setIsHit(true);
+				attack1[ycoord][xcoord].setIsShip(true);
+				defend2[ycoord][xcoord].takeDamage();
+				//System.out.println(defend2[xcoord][ycoord].getParent().getHealth());
+				message += "Hit!  ";
+				if(defend2[ycoord][xcoord].getParent().getHealth() == 0) //error line
+				{
+					message += (" " + defend2[ycoord][xcoord].getParent().getName() + " sunk!");
+				}
+			}
+			else
+			{
+				attack1[ycoord][xcoord].setIsHit(true);
+				message += "Miss! ";
+			}
+			return message;
+		}
+		else
+		{
+			defend1[ycoord][xcoord].setIsHit(true);
+			if(defend1[ycoord][xcoord].getIsShip())
+			{
+				attack2[ycoord][xcoord].setIsHit(true);
+				attack2[ycoord][xcoord].setIsShip(true);
+				defend1[ycoord][xcoord].takeDamage();
+				//System.out.println(defend2[xcoord][ycoord].getParent().getHealth());
+				message += "Hit! ";
+				if(defend1[ycoord][xcoord].getParent().getHealth() == 0) //error line
+				{
+					message += (" " + defend1[ycoord][xcoord].getParent().getName() + " sunk!");
+				}
+			}
+			else
+			{
+				attack2[ycoord][xcoord].setIsHit(true);
+				message += "Miss! ";
+			}
+			return message;
+		}
+	}
+
+	public int checkWon()
+	{
+		boolean winnerFound = true;
+		for(int i = 0; i < ships1.length; i++)
+		{
+			if(ships1[i].getHealth() != 0)
+			{
+				winnerFound = false;
+			}
+		}
+		if(winnerFound)
+			return 1;
+		for(int i = 0; i < ships1.length; i++)
+		{
+			if(ships2[i].getHealth() != 0)
+			{
+				winnerFound = false;
+			}
+		}
+		if(winnerFound)
+			return 2;
+		return -1;
+	}
+	
 	public void initGame(Scanner input)
 	{
 		//PLAYER 1 SETUP
