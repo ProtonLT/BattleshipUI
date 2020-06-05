@@ -77,6 +77,7 @@ public class BattleshipFrame extends JFrame{
 		panel.add(orientationField, BorderLayout.LINE_END);
 		panel.add(testButton, BorderLayout.CENTER);
 		playerMessage.append("Player " + player + ", place your " + shipNames[counter]);
+		printBoard(driver.defend1);
 		testButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
