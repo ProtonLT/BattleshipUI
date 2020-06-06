@@ -49,7 +49,7 @@ public class Ship{
 	public void setLocation(int[] location)
 	{
 		this.location = location;
-		System.out.println(location[0] + "  " + location[1]);
+		//System.out.println(location[0] + "  " + location[1]);
 	}
 	
 	public int[] getLocation()

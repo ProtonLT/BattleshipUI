@@ -24,11 +24,10 @@ public class BattleshipFrame extends JFrame{
 		textArea = new JTextArea();
 		//Font original = ;
 		//Font bigger = original.deriveFont(newSize);
-		//textArea.setFont(new Font("Calibri", Font.PLAIN, 16));
+		textArea.setFont(new Font("Consolas", Font.PLAIN, 16));
 		//textArea.setFont(bigger);
 		playerMessage = new JTextArea(50, 55);
 		playerMessage.setFont(new Font("Serif", Font.BOLD, 14));
-
 		//create player input panel
 		panel = new JPanel();
 		JButton startButton = new JButton("Start");
@@ -179,6 +178,7 @@ public class BattleshipFrame extends JFrame{
 					printBoard(driver.defend2);
 				}
 				int winner = driver.checkWon();
+				//System.out.println(winner);
 				if(winner != -1)
 				{
 					player = winner;
@@ -192,8 +192,14 @@ public class BattleshipFrame extends JFrame{
 	{
 		Container c = getContentPane();
 		c.removeAll();
+		JPanel endPanel = new JPanel();
 		JLabel winnerLabel = new JLabel("Player " + player + " wins!");
-		c.add(winnerLabel, BorderLayout.CENTER);
+		winnerLabel.setFont(new Font("Serif", Font.BOLD, 30));
+		endPanel.add(winnerLabel, BorderLayout.CENTER);
+		endPanel.setBorder(BorderFactory.createEmptyBorder(195, 15, 15, 15));
+		c.revalidate();
+		c.add(endPanel);
+		c.repaint();
 	}
 	
 	public void printBoard(Space[][] board)

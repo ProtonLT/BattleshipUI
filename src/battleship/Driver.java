@@ -333,8 +333,10 @@ public class Driver{
 	public int checkWon()
 	{
 		boolean winnerFound = true;
+		//System.out.println("Player 1");
 		for(int i = 0; i < ships1.length; i++)
 		{
+			//System.out.println(ships1[i].getName() + ": " + ships1[i].getHealth());
 			if(ships1[i].getHealth() != 0)
 			{
 				winnerFound = false;
@@ -342,8 +344,11 @@ public class Driver{
 		}
 		if(winnerFound)
 			return 1;
-		for(int i = 0; i < ships1.length; i++)
+		winnerFound = true;
+		//System.out.println("Player 2");
+		for(int i = 0; i < ships2.length; i++)
 		{
+			//System.out.println(ships2[i].getName() + ": " +ships2[i].getHealth());
 			if(ships2[i].getHealth() != 0)
 			{
 				winnerFound = false;
