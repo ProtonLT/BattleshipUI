@@ -80,7 +80,7 @@ public class BattleshipFrame extends JFrame{
 		testButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				System.out.println(counter + shipNames[counter]);
+				//System.out.println(counter + shipNames[counter]);
 				String xCoordStr = xField.getText();
 				String yCoordStr = yField.getText();
 				String orientation = orientationField.getText();
@@ -204,7 +204,7 @@ public class BattleshipFrame extends JFrame{
 	
 	public void printBoard(Space[][] board)
 	{
-		String[] letters = {"     ", "A  ", "B  ", "C  ", "D  ", "E  ", "F  ", "G  ", "H  ", "I  ", "J"};
+		String[] letters = {"    ", "A  ", "B  ", "C  ", "D  ", "E  ", "F  ", "G  ", "H  ", "I  ", "J"};
 		for(int i = 0; i < board.length + 1; i++)
 		{
 			textArea.append(letters[i]);
@@ -219,9 +219,9 @@ public class BattleshipFrame extends JFrame{
 				if(board[i][j].getIsShip())
 				{
 					if(board[i][j].getIsHit())
-						textArea.append("0 ");
+						textArea.append("0  ");
 					else
-						textArea.append("O ");
+						textArea.append("O  ");
 				}
 				else
 				{

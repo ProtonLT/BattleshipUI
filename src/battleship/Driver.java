@@ -34,7 +34,7 @@ public class Driver{
 		//frame.add(panel, BorderLayout.CENTER);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setTitle("Battleship");
-		frame.setPreferredSize(new Dimension(500, 530));
+		frame.setPreferredSize(new Dimension(650, 530));
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -102,7 +102,7 @@ public class Driver{
 	{
 		if(!checkValidPlace(ycoordStr, xcoordStr, counter, player, orientation).equals("Ship placed."))
 		{
-			System.out.println("Here");
+			//System.out.println("Here");
 			return;
 		}
 		int xcoord = letToNum(xcoordStr);
@@ -120,7 +120,7 @@ public class Driver{
 
 					defend1[ycoord][xcoord + j] = ships1[counter].getSize()[j];
 				}
-				printBoard(defend1);
+				//printBoard(defend1);
 			}
 			if(player == 2)
 			{
@@ -132,7 +132,7 @@ public class Driver{
 				{
 					defend2[ycoord][xcoord + j] = ships2[counter].getSize()[j];
 				}
-				printBoard(defend2);
+				//printBoard(defend2);
 			}
 		}
 		else if(orientation.toUpperCase().equals("V"))
@@ -146,7 +146,7 @@ public class Driver{
 				{
 					defend1[ycoord + j][xcoord] = ships1[counter].getSize()[j];
 				}
-				printBoard(defend1);
+				//printBoard(defend1);
 			}
 			else if(player == 2)
 			{
@@ -157,7 +157,7 @@ public class Driver{
 				{
 					defend2[ycoord + j][xcoord] = ships2[counter].getSize()[j];
 				}
-				printBoard(defend2);
+				//printBoard(defend2);
 			}
 		}
 	}
@@ -201,7 +201,7 @@ public class Driver{
 		//check if space is already taken
 		if(orientation.toUpperCase().equals("H"))
 		{
-			System.out.println("H");
+			//System.out.println("H");
 			if(player == 1)
 			{
 				for(int j = 0; j < counter; j++)
@@ -225,7 +225,7 @@ public class Driver{
 		}
 		if(orientation.toUpperCase().equals("V"))
 		{
-			System.out.println("V");
+			//System.out.println("V");
 			if(player == 1)
 			{
 				for(int j = 0; j < counter; j++)
